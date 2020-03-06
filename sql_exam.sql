@@ -39,7 +39,7 @@ FROM NAEP
 WHERE year = 2000;
 
 
---7 I HAVEN't FINISHED YET
+--7
 SELECT state as below_average_states_y2000, ROUND(AVG(avg_math_4_score), 2) AS state_score
 FROM naep
 WHERE year = 2000
