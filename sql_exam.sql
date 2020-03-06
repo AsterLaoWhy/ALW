@@ -1,7 +1,7 @@
 --1
-SELECT *
-FROM NAEP;
-
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'naep';
 
 
 --2
