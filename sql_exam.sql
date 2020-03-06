@@ -24,7 +24,7 @@ HAVING (MAX(avg_math_4_score)-MIN(avg_math_4_score))<=30;
 
 
 --5
-SELECT state  as bottom_10, avg_math_4_score
+SELECT state  as bottom_10_states
 FROM NAEP
 WHERE year = 2000
 ORDER BY avg_math_4_score
@@ -40,33 +40,28 @@ WHERE year = 2000;
 
 
 --7
-SELECT state as below_average_states_y2000, ROUND(AVG(avg_math_4_score), 2) AS state_score
+SELECT state as below_average_states_y2000
 FROM naep
-WHERE year = 2000
-GROUP BY state
-HAVING AVG(avg_math_4_score) < ANY
+WHERE year = 2000 AND avg_math_4_score < ANY
 		   (SELECT AVG(avg_math_4_score)
 			FROM naep
 			WHERE year = 2000
 		   )
-ORDER BY state_score;
+;
 
 
 
 
 --8
-SELECT state
+SELECT state AS scores_missing_y2000
 FROM naep
 WHERE year = 2000 AND avg_math_4_score IS NULL
-ORDER BY state;
+;
 
 --9
 SELECT naep.state, ROUND(naep.avg_math_4_score, 2) AS avg_score, fin.total_expenditure
 from naep
 LEFT OUTER JOIN finance as fin
 ON naep.id = fin.id
-WHERE naep.year = 2000
-GROUP BY naep.state, avg_score, fin.total_expenditure, naep.avg_math_4_score
-HAVING naep.avg_math_4_score IS NOT NULL
+WHERE naep.year = 2000 AND naep.avg_math_4_score IS NOT NULL
 ORDER BY fin.total_expenditure DESC;
-
